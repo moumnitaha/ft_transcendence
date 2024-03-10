@@ -287,6 +287,7 @@ export default function App() {
               type="text"
               value={room}
               onChange={(e) => setRoom(e.target.value.trim())}
+              className="text-black"
             />
             <input
               className="bg-slate-300 text-black justify-center items-center flex rounded-full w-[5%] font-sans mx-auto"
