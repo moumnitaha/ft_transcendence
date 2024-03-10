@@ -1,7 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: false,
   images: {
-    domains: ["profile.intra.42.fr"],
+    remotePatterns: [
+      {
+        hostname: "profile.intra.42.fr",
+        protocol: "https",
+      },
+    ],
   },
 };
 
