@@ -8,7 +8,7 @@ export default function Match() {
   const [joined, setJoined] = useState(false);
   const [msg, setMsg] = useState("");
   const ws = useRef(null);
-  const { push, replace } = useRouter();
+  const { push } = useRouter();
   useEffect(() => {
     ws.current = new WebSocket("ws://10.30.164.21:8000/match/42");
     ws.current.onopen = () => {
@@ -26,6 +26,12 @@ export default function Match() {
       console.log("data => ", data);
       if (data.type === "start_game") {
         console.log(data.player1, data.player2, data.room_name);
+        let encoded = btoa(
+          data.player1 + "_" + data.player2 + "_" + data.room_name
+        );
+        console.log(encoded);
+        encoded = encoded.replace(/=/g, "");
+        console.log(encoded);
         setOpponent(name === data.player1 ? data.player2 : data.player1);
         setMsg("Game starting in 3 seconds...");
         //redirect to game page
