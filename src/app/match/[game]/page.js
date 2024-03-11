@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useRouter, useParams } from "next/navigation";
 
 const drawNet = (canvas) => {
   const net = {
@@ -75,17 +76,22 @@ const rightPaddle = {
   color: "white",
 };
 
-export default function App() {
+export default function Game() {
+  const { replace } = useRouter();
+  const params = useParams();
+  //   console.log("params===>", params);
   const canvasRef = useRef(null);
-  const [room, setRoom] = useState("");
-  const [joined, setJoined] = useState(false);
+  //   const [room, setRoom] = useState("");
+  //   const [joined, setJoined] = useState(false);
   const [player, setPlayer] = useState(0);
+  const [name, setName] = useState("");
+  const [opponent, setOpponent] = useState("");
   let ws = useRef(null);
-
+  //   setRoom(params.game);
   useEffect(() => {
     console.log("socket=>", ws.current);
-    if (!joined) return;
-    ws.current = new WebSocket(`ws://10.30.164.21:8000/pong/${room}`);
+    // if (!joined) return;
+    ws.current = new WebSocket(`ws://10.30.164.21:8000/pong/${params.game}`);
     console.log("socket 2=>", ws.current);
     ws.current.onopen = () => {
       console.log(">> CONNECTION OPENED <<");
@@ -102,11 +108,15 @@ export default function App() {
         if (data.message === 1 || data.message === 2) {
           console.log("SETTING PLAYER", data.message);
           setPlayer((prev) => prev + data.message);
+          setName(data.name);
+          setOpponent(data.opponent);
         }
         if (data.message === "room_full") {
-          console.log("room_full");
+          alert("room_full");
+          replace("/match");
           ws.current.close();
-          setJoined(false);
+
+          //   setJoined(false);
         }
       }
       if (data.type === "start_game") {
@@ -157,7 +167,7 @@ export default function App() {
     return () => {
       ws.current.close();
     };
-  }, [joined]);
+  }, []);
 
   useEffect(() => {
     if (!player) return;
@@ -219,14 +229,14 @@ export default function App() {
   }, [player]);
 
   return (
-    <div
+    <main
       id="main"
       className="w-[100svw] h-[100svh] bg-gradient-to-t from-cyan-700 p-5"
     >
       <div className="h-20 m-5 flex justify-between">
         <div className="flex flex-row w-[30%] justify-center rounded-lg">
           <div className="bg-slate-300 text-black justify-center items-center flex rounded-full mx-5 w-[50%] font-sans">
-            {player ? `PLAYER ${player === 1 ? 1 : 2}` : null}
+            {player ? (player === 1 ? name : opponent) : null}
           </div>
           <Image
             src="https://profile.intra.42.fr/images/default.png"
@@ -252,35 +262,35 @@ export default function App() {
             priority={true}
           />
           <div className="bg-slate-300 text-black justify-center items-center flex rounded-full mx-5 w-[50%] font-sans">
-            {player ? `PLAYER ${player === 1 ? 2 : 1}` : null}
+            {player ? (player === 1 ? opponent : name) : null}
           </div>
         </div>
       </div>
       <div className="flex flex-row justify-around my-3">
-        {joined ? (
-          <>
-            <button
-              className="bg-slate-300 text-black justify-center items-center flex rounded-full w-[20%] font-sans mx-auto"
-              onClick={() => {
-                if (ws) {
-                  ws.current.send(JSON.stringify({ type: "move_ball" }));
-                } else {
-                  console.warn("socket not connected", ws);
-                }
-              }}
-            >
-              START
-            </button>
-            {room}
-            <button
-              className="bg-slate-300 text-black justify-center items-center flex rounded-full w-[20%] font-sans mx-auto"
-              onClick={() => {
-                ws.current.send(JSON.stringify({ type: "stop_ball" }));
-              }}
-            >
-              STOP
-            </button>
-          </>
+        {/* {joined ? (
+          <> */}
+        <button
+          className="bg-slate-300 text-black justify-center items-center flex rounded-full w-[20%] font-sans mx-auto"
+          onClick={() => {
+            if (ws) {
+              ws.current.send(JSON.stringify({ type: "move_ball" }));
+            } else {
+              console.warn("socket not connected", ws);
+            }
+          }}
+        >
+          START
+        </button>
+        {params.game}
+        <button
+          className="bg-slate-300 text-black justify-center items-center flex rounded-full w-[20%] font-sans mx-auto"
+          onClick={() => {
+            ws.current.send(JSON.stringify({ type: "stop_ball" }));
+          }}
+        >
+          STOP
+        </button>
+        {/* </>
         ) : (
           <>
             <input
@@ -299,7 +309,7 @@ export default function App() {
               }}
             />
           </>
-        )}
+        )} */}
       </div>
       <canvas
         ref={canvasRef}
@@ -307,6 +317,6 @@ export default function App() {
         height={400}
         className="mx-auto bg-cyan-700 rounded-lg"
       />
-    </div>
+    </main>
   );
 }
