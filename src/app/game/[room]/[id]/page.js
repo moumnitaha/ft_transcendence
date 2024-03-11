@@ -77,21 +77,21 @@ const rightPaddle = {
 };
 
 export default function Game() {
-  const { replace } = useRouter();
-  const params = useParams();
-  //   console.log("params===>", params);
-  const canvasRef = useRef(null);
-  //   const [room, setRoom] = useState("");
-  //   const [joined, setJoined] = useState(false);
   const [player, setPlayer] = useState(0);
   const [name, setName] = useState("");
   const [opponent, setOpponent] = useState("");
+  const { replace } = useRouter();
+  const params = useParams();
+  console.log("params===>", atob(decodeURIComponent(params.id)));
+  const canvasRef = useRef(null);
+  //   const [room, setRoom] = useState("");
+  //   const [joined, setJoined] = useState(false);
   let ws = useRef(null);
   //   setRoom(params.game);
   useEffect(() => {
     console.log("socket=>", ws.current);
     // if (!joined) return;
-    ws.current = new WebSocket(`ws://10.30.164.21:8000/pong/${params.game}`);
+    ws.current = new WebSocket(`ws://10.30.164.21:8000/pong/${params.room}`);
     console.log("socket 2=>", ws.current);
     ws.current.onopen = () => {
       console.log(">> CONNECTION OPENED <<");
@@ -108,8 +108,16 @@ export default function Game() {
         if (data.message === 1 || data.message === 2) {
           console.log("SETTING PLAYER", data.message);
           setPlayer((prev) => prev + data.message);
-          setName(data.name);
-          setOpponent(data.opponent);
+          setName(
+            atob(decodeURIComponent(params.id)) === data.player1
+              ? data.player1
+              : data.player2
+          );
+          setOpponent(
+            atob(decodeURIComponent(params.id)) === data.player1
+              ? data.player2
+              : data.player1
+          );
         }
         if (data.message === "room_full") {
           alert("room_full");

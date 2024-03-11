@@ -26,17 +26,17 @@ export default function Match() {
       console.log("data => ", data);
       if (data.type === "start_game") {
         console.log(data.player1, data.player2, data.room_name);
-        let encoded = btoa(
-          data.player1 + "_" + data.player2 + "_" + data.room_name
-        );
-        console.log(encoded);
-        encoded = encoded.replace(/=/g, "");
-        console.log(encoded);
+        // let encoded = btoa(
+        //   data.player1 + "_" + data.player2 + "_" + data.room_name
+        // );
+        // console.log(encoded);
+        // encoded = encoded.replace(/=/g, "");
+        // console.log(encoded);
         setOpponent(name === data.player1 ? data.player2 : data.player1);
         setMsg("Game starting in 3 seconds...");
         //redirect to game page
         setTimeout(() => {
-          push(`/match/${data.room_name}`);
+          push(`/game/${data.room_name}/${btoa(name)}`);
         }, 3000);
       }
     };
