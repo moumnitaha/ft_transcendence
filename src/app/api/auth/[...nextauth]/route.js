@@ -18,26 +18,26 @@ const handler = NextAuth({
         // account.email = profile.email;
         account = { login: profile.login, email: profile.email, ...account };
         console.log(account);
-        try {
-          await axios
-            .post(
-              "http://10.30.164.21:8000/pong/createUser/",
-              {
-                username: account.login,
-                email: account.email,
-              },
-              {
-                headers: {
-                  "X-CSRFTOKEN": "csrftoken",
-                },
-              }
-            )
-            .then((res) => {
-              console.log(res);
-            });
-        } catch (error) {
-          console.log(error);
-        }
+        // try {
+        //   await axios
+        //     .post(
+        //       "http://10.30.164.21:8000/pong/createUser/",
+        //       {
+        //         username: account.login,
+        //         email: account.email,
+        //       },
+        //       {
+        //         headers: {
+        //           "X-CSRFTOKEN": "csrftoken",
+        //         },
+        //       }
+        //     )
+        //     .then((res) => {
+        //       console.log(res);
+        //     });
+        // } catch (error) {
+        //   console.log(error);
+        // }
         return true;
       }
       return false;
