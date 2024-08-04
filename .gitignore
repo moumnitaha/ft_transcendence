@@ -1,36 +1,22 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+.venv
+django-env
+db.sqlite3
+# backend/pong/__pycache__
+backend/pong/migrations/0*
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-.yarn/install-state.gz
+# backend/chat/__pycache__
+backend/chat/migrations/0*
 
-# testing
-/coverage
+# backend/users/__pycache__
+backend/users/migrations/0*
 
-# next.js
-/.next/
-/out/
 
-# production
-/build
+postgres
+frontend/.next
+frontend/.env
+backend/.env
+frontend/node_modules
+backend/.venv
+postgres
 
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# local env files
-.env*.local
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+.env

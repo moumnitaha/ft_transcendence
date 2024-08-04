@@ -1,0 +1,20 @@
+FROM  nginx
+
+WORKDIR /frontend/
+
+RUN apt-get update && apt-get install -y openssl
+
+RUN rm /etc/nginx/conf.d/default.conf
+
+COPY ./conf/nginx.conf /etc/nginx/conf.d
+
+RUN mkdir -p /etc/ssl/private /etc/ssl/certs
+
+WORKDIR /
+COPY ./tools/ssl.sh ./script.sh
+
+RUN chmod 777 script.sh
+
+RUN ./script.sh
+
+CMD ["nginx", "-g", "daemon off;"]

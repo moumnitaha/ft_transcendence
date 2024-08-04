@@ -1,0 +1,65 @@
+version: "3.9"
+
+services:
+  nginx:
+    container_name: server
+    build: ./nginx/
+    ports:
+      - 443:443
+    networks:
+      - project
+    depends_on:
+      - frontend
+      - db
+      - api
+    restart: always
+    volumes:
+      - django:/app/static
+  db:
+    image: postgres:14-alpine
+    container_name: db
+    ports:
+      - "5432"
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - project
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+  api:
+    container_name: api
+    build: ./backend/
+    ports:
+      - 8000
+    networks:
+      - project
+    depends_on:
+      - db
+    restart: always
+    volumes:
+      - django:/app/static
+  frontend:
+    container_name: frontend
+    # develop:
+    #   watch:
+    #     - action: "rebuild"
+    #       path: ./frontend/
+    #       target: /frontend/
+    #       ignore:
+    #         - .git
+    #         - node_modules
+    build: ./frontend/
+    ports:
+      - 3000
+    networks:
+      - project
+    depends_on:
+      - db
+    restart: always
+
+networks:
+  project:
+
+volumes:
+  django:

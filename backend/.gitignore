@@ -1,0 +1,36 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Caches
+*.cache/
+*.log
+
+# Environment variables file
+.env
+
+# Django development server
+*.sqlite3
+
+# Dependency directories
+.env/
+venv/
+env/
+
+# Static files directory
+staticfiles/
+
+# Media files directory
+# media/
+
+# Ignore the local settings file
+local_settings.py
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore Visual Studio Code settings
+.vscode/
+
+media/avatars/*

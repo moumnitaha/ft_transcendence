@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            {% block title %}
+                Pong
+            {% endblock title %}
+        </title>
+        <meta name="description" content="Welcome to Pong!">
+        <meta name="keywords" content="Pong, game">
+    </head>
+    <body>
+        <h1 id="title">Pong</h1>
+        <p>Welcome to Pong!</p>
+        <input type="text" id="message" placeholder="Enter message">
+        <button id="send">Send</button>
+        <p>
+            <a href="{% url 'admin:index' %}">Admin Panel</a>
+        </p>
+        {% block content %}
+        {% endblock content %}
+    </body>
+    <script>
+		var ws = new WebSocket("wss://127.0.0.1:8000/pong/");
+		ws.onerror = function(e) {
+			console.log("Error: " + e);
+		};
+		ws.onopen = function() {
+			console.log("Connected to server");
+			ws.send(JSON.stringify({'message': 'Hello from BASE frontend'}));
+			console.log("Sent message: Hello from BASE frontend")
+		};
+		ws.onmessage = function(e) {
+			document.getElementById("title").innerHTML = JSON.parse(e.data);
+			console.log("Received message: " , JSON.parse(e.data));
+		};
+		ws.onclose = function() {
+			console.log("Disconnected from server");
+		};
+		document.getElementById("send").onclick = function() {
+			ws.send(JSON.stringify({'message': document.getElementById("message").value}));
+			console.log("Sent message: " + document.getElementById("message").value);
+		};
+    </script>
+</html>

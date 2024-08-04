@@ -1,0 +1,198 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 0.5em;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+@font-face {
+  font-family: "Roboto Mono";
+  src: url("/fonts/RobotoMono-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Roboto Mono";
+  src: url("/fonts/RobotoMono-Thin.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Roboto Mono";
+  src: url("/fonts/RobotoMono-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/Poppins-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/Poppins-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/Poppins-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* background-color: var(--background); */
+  color: var(--foreground);
+  font-family: "Roboto Mono", monospace;
+}
+
+@layer base {
+  :root {
+    --background: #fff;
+    --foreground: #39afd0;
+    /* --foreground: #0c0c0c; */
+    --card: #f7f7f7;
+    --card-foreground: #0c0c0c;
+    --popover: #f7f7f7;
+    --popover-foreground: #0c0c0c;
+    --primary: #444444;
+    --primary-foreground: #f7f7f7;
+    --secondary: #09090b;
+    --secondary-foreground: #b7b7b7;
+    --muted: #ededed;
+    --muted-foreground: #9a9a9a;
+    /* --accent: #b9d9f9; */
+    --accent: #d2e2f2;
+    --accent-foreground: #1c6ab2;
+    --destructive: #f2f2f2;
+    --destructive-foreground: #0c0c0c;
+    --border: #b0b0b0;
+    --input: #b0b0b0;
+    --lprimary: #146f8c;
+    --Secondary: #bca37f;
+    --lSecondary: #ead7bb;
+    --Background: #f5f4f3;
+    --gray: #f1f0ef;
+    --textgray: #c0c1c5;
+    --backgroundchat: #fafdff;
+    --backgroundInput: #f5f7f9;
+    --colorInput: #898f94;
+    --ring: #6f78ed;
+    --radius: 0.8rem;
+  }
+  .btn {
+    width: 100%;
+    display: grid;
+    place-content: center;
+    font-size: 1.2rem;
+    width: 34px;
+    height: 36px;
+    color: #04539d;
+    cursor: pointer;
+  }
+
+  ul .activate::after {
+    content: "";
+    display: block;
+    width: 5px;
+    height: 5px;
+    background-color: #04539d;
+    border-radius: 50%;
+    margin: 0px auto 5px;
+  }
+
+  .not_found {
+    background: url("../public/images/not-found.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .not_found h1 {
+    background: -webkit-linear-gradient(
+      180deg,
+      rgba(62, 166, 171, 0.44) -78.51%,
+      rgba(255, 255, 255, 0) 162.5%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .linear-gradient {
+    background: linear-gradient(180deg, #00539d -58%, #478bc8 100%);
+  }
+
+  .shadow-gradient {
+    box-shadow: 0px 0px 0px 0px #00000008;
+    box-shadow: 0px 11px 25px 0px #00000008;
+    box-shadow: 0px 45px 45px 0px #00000008;
+    box-shadow: 0px 102px 61px 0px #00000005;
+    box-shadow: 0px 181px 72px 0px #00000000;
+    box-shadow: 0px 283px 79px 0px #00000000;
+  }
+
+  .shadow_img {
+    box-shadow: 0px 0px 0px 0px #02638d0f inset;
+    box-shadow: 0px 4px 9px 0px #02638d0f inset;
+    box-shadow: 0px 17px 17px 0px #02638d0d inset;
+    box-shadow: 0px 37px 22px 0px #02638d08 inset;
+    box-shadow: 0px 66px 26px 0px #02638d03 inset;
+    box-shadow: 0px 103px 29px 0px #02638d00 inset;
+  }
+
+  .animate {
+    animation: message 0.5s linear alternate;
+    transition: all 0.3s linear;
+  }
+
+  .border {
+    border: 1px solid #8fc0ec;
+  }
+  /* .dark {
+	  --background: 224 71.4% 4.1%;
+	  --foreground: 210 20% 98%;
+	  --card: 224 71.4% 4.1%;
+	  --card-foreground: 210 20% 98%;
+	  --popover: 224 71.4% 4.1%;
+	  --popover-foreground: 210 20% 98%;
+	  --primary: 263.4 70% 50.4%;
+	  --primary-foreground: 210 20% 98%;
+	  --secondary: 215 27.9% 16.9%;
+	  --secondary-foreground: 210 20% 98%;
+	  --muted: 215 27.9% 16.9%;
+	  --muted-foreground: 217.9 10.6% 64.9%;
+	  --accent: 215 27.9% 16.9%;
+	  --accent-foreground: 210 20% 98%;
+	  --destructive: 0 62.8% 30.6%;
+	  --destructive-foreground: 210 20% 98%;
+	  --border: 215 27.9% 16.9%;
+	  --input: 215 27.9% 16.9%;
+	  --ring: 263.4 70% 50.4%;
+	} */
+}
+
+.signlogin-pages > div {
+  border: 1px solid var(--destructive);
+  box-shadow: 0 0 50px #acacac5c;
+}

@@ -1,0 +1,26 @@
+FROM python:3.9-slim
+
+
+ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE 1
+
+WORKDIR /app
+
+# COPY ../../requirements.txt  .
+
+COPY . /app
+
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+RUN sh -c "mkdir -p /app/static"
+
+#fix gunicorn sockets connection from nginx
+
+RUN chown -R www-data:www-data /app
+RUN chmod -R 755 /app
+
+
+# RUN python manage.py makemigrations
+# RUN python manage.py migrate
+
+CMD ["sh", "-c", "python3 manage.py collectstatic --noinput && python3 manage.py makemigrations chat && python3 manage.py makemigrations pong && python3 manage.py makemigrations users && python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"]
